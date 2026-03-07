@@ -15,7 +15,7 @@ const Register = () => {
   });
     const isFormValid = formData.name.trim() && formData.email.trim() && formData.password.trim().length >= 8;
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,25 +23,24 @@ const Register = () => {
 
   const handleSubmit = async (role) => {
     setError("");
-    setLoading(true);
-    try {
-      const response = await register({ ...formData, role });
-      setAuth(response.userId, response.role);
-
-      if (role === "provider") {
-        navigate("/provider/complete-profile");
-      } else {
-        navigate("/");
-      }
-    } catch (err) {
-             if (err.response?.status === 429) {
+    setLoading(role);
+try {
+    const response = await register({ ...formData, role });
+    setAuth(response.userId, response.role);
+    if (role === "provider") {
+      navigate("/provider/complete-profile");
+    } else {
+      navigate("/providers");
+    }
+  } catch (err) {
+    if (err.response?.status === 429) {
       setError("Too many register attempts. Please try again later.");
     } else {
       setError(err.response?.data?.message || "Something went wrong");
     }
-    } finally {
-      setLoading(false);
-    }
+  } finally {
+    setLoading("");
+  }
   };
 
   return (
@@ -96,21 +95,21 @@ const Register = () => {
         </div>
 
         <div className="space-y-3">
-          <button
-            onClick={() => handleSubmit("customer")}
-             disabled={loading || !isFormValid}
-            className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-900 transition  disabled:cursor-not-allowed"
-          >
-            {loading ? "Please wait..." : "Register as Customer"}
-          </button>
+         <button
+             onClick={() => handleSubmit("customer")}
+               disabled={loading !== "" || !isFormValid}
+              className="w-full bg-black text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-900 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                     >
+                   {loading === "customer" ? "Please wait..." : "Register as Customer"}
+                      </button>
 
-          <button
-            onClick={() => handleSubmit("provider")}
-             disabled={loading || !isFormValid}
-            className="w-full border border-black text-black py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition  disabled:cursor-not-allowed"
-          >
-            {loading ? "Please wait..." : "Register as Provider"}
-          </button>
+                    <button
+                     onClick={() => handleSubmit("provider")}
+                     disabled={loading !== "" || !isFormValid}
+                        className="w-full border border-black text-black py-2.5 rounded-lg text-sm font-medium hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                           >
+                       {loading === "provider" ? "Please wait..." : "Register as Provider"}
+                          </button>
         </div>
 
         <p className="text-center text-sm text-gray-500 mt-6">
