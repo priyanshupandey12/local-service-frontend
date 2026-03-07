@@ -25,7 +25,7 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await login(formData);
-      setAuth(response.userId, response.role, response.token);
+      setAuth(response.userId, response.role);
 
       if (response.role === "provider") {
         navigate("/provider/dashboard");

@@ -3,14 +3,12 @@ import { create } from "zustand";
 const useAuthStore = create((set) => ({
   user: null,
   role: null,
-  token: null,
   isAuthenticated: false,
     isLoading: true,
 
   setAuth: (userId, role) => set({ 
     user: userId, 
     role, 
-    token,
     isAuthenticated: true,
       isLoading: false
   }),
@@ -20,7 +18,6 @@ const useAuthStore = create((set) => ({
   clearAuth: () => set({ 
     user: null, 
     role: null, 
-     token:null,
     isAuthenticated: false ,
       isLoading: false
   }),
