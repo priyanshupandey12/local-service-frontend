@@ -33,7 +33,7 @@ const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
-  console.log(bookings)
+ 
 
   useEffect(() => {
     const fetchBookings = async () => {

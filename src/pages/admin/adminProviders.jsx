@@ -11,7 +11,7 @@ const AdminProviders = () => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
-  console.log(providers)
+
 
 
   useEffect(() => {
