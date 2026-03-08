@@ -1,28 +1,22 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useAuthStore = create((set) => ({
-  user: null,
-  role: null,
-  isAuthenticated: false,
-    isLoading: true,
+const useAuthStore = create(
+  persist(
+    (set) => ({
+      user: null,
+      role: null,
+      token: null,
+      isAuthenticated: false,
 
-  setAuth: (userId, role) => set({ 
-    user: userId, 
-    role, 
-    isAuthenticated: true,
-      isLoading: false
-  }),
+      setAuth: (userId, role, token) =>
+        set({ user: userId, role, token, isAuthenticated: true }),
 
- 
-
-  clearAuth: () => set({ 
-    user: null, 
-    role: null, 
-    isAuthenticated: false ,
-      isLoading: false
-  }),
-}));
-
-
+      clearAuth: () =>
+        set({ user: null, role: null, token: null, isAuthenticated: false }),
+    }),
+    { name: "auth" }
+  )
+);
 
 export default useAuthStore;

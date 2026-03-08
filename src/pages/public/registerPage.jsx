@@ -26,7 +26,7 @@ const Register = () => {
     setLoading(role);
 try {
     const response = await register({ ...formData, role });
-    setAuth(response.userId, response.role);
+   setAuth(response.userId, response.role, response.token);
     if (role === "provider") {
       navigate("/provider/complete-profile");
     } else {

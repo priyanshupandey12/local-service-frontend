@@ -1,8 +1,5 @@
 import { Routes, Route ,useLocation} from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-import { getMe } from "./services/authServices";
-import useAuthStore from "./store/authStore";
-import { useEffect } from "react";
 
 
  import Home from "./pages/public/homePage";
@@ -37,23 +34,7 @@ import AdminLayout from "./pages/admin/adminLayout";
 const App = () => {
     const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
-    const { setAuth, clearAuth ,isLoading} = useAuthStore();
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await getMe();
-        setAuth(response.user._id, response.user.role);
-      } catch (err) {
-        clearAuth();
-      }
-    };
-    getUser();
-  }, []);
-
-    if(isLoading){
-      return <div className="text-center text-gray-400 py-10">Loading...</div>
-    }
   return (
        <>
        {!isAdminPage && <Navbar />}
